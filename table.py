@@ -20,7 +20,7 @@ def table_from_2d_list(inp_list: List) -> str:
     for y in range(size_y):
         output.append("")
         for x in range(size_x):
-            output[y] += inp_list[y][x]
+            output[y] += ' ' + inp_list[y][x]
 
     # draw bottom line
     #output.append("\033[4m|")
