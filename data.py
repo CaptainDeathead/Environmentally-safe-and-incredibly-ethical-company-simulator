@@ -1,18 +1,20 @@
 
 
 CHUNK_SIZE = 9
-SEED = 10
+SEED = 10022
 
-DEPOSIT_TYPES = ['fossil', 'coal', 'oil', 'gas']
+DEPOSIT_TYPES = ['none', 'fossil', 'coal', 'oil', 'gas']
 
-DEPOSIT_SPAWN_CHANCES = { # larger is worse
-    'fossil': 11,
-    'coal': 13,
-    'oil': 17,
-    'gas': 19
+DEPOSIT_SPAWN_CHANCES = { # higher is better
+    'none': 40,
+    'fossil': 15,
+    'coal': 5,
+    'oil': 3,
+    'gas': 1
 }
 
 SYMBOLS = {
+    'none': '+',
     'fossil': 'f',
     'coal': 'c',
     'oil': 'o',
