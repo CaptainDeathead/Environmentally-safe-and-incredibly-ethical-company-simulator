@@ -39,6 +39,8 @@ def parse_input(cmds: List) -> str:
     
     elif cmds[0] == "exit": return "exit"
     
+    elif len(cmds) == 1 and len(cmds[0]) == 0: return ""
+
     elif cmds[0] == "l": return left()
     elif cmds[0] == "r": return right()
     elif cmds[0] == "u": return up()
