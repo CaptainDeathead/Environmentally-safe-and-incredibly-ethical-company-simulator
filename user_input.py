@@ -1,42 +1,46 @@
-from typing import Dict
-from pynput import keyboard
-from pynput.keyboard import Key
-import string
-from time import sleep
+from typing import List
 
-SPECIAL_TO_STRING = {
-    Key.left: 'left',
-    Key.right: 'right',
-    Key.up: 'up',
-    Key.down: 'down',
-    Key.ctrl: 'ctrl'
-}
+def game_help(help_type: str = "None") -> str:
+    if help_type == "movement":
+        return """
+Movement:
+    - left (l): Move left
+    - right (r): Move right
+    - up (u): Move up
+    - down (d): Move down
+"""
+    else: return """
+Commands:
+    - For help with movment type: 'help movement'
 
-KEYS: Dict = {
-    'left': False, 'right': False, 'up': False, 'down': False, 'ctrl': False
-}
+    - 'exit': Quit the game!
 
-for letter in list(string.ascii_lowercase):
-    KEYS[letter] = False
+    - More to come...
+"""
 
-def on_press(key: Key):
-    try:            
-        if key.char in list(KEYS.keys()): KEYS[key.char] = True
-    except AttributeError:
-        if key in list(SPECIAL_TO_STRING.keys()): KEYS[SPECIAL_TO_STRING[key]] = True
-    return False
-        
-def on_release(key):
-    try:            
-        if key.char in list(KEYS.keys()): KEYS[key.char] = False
-    except AttributeError:
-        if key in list(SPECIAL_TO_STRING.keys()): KEYS[SPECIAL_TO_STRING[key]] = False
-    return False
+def left() -> str:
+    return "l"
 
-def get_input() -> str:
-    listener: keyboard.Listener = keyboard.Listener(on_press=on_press, on_release=on_release)
-    listener.start()
-    listener.join()
-    if KEYS['ctrl'] and KEYS['c']:
-        print("\nKeyboard interupt detected. Program shutting down!")
-        exit()
+def right() -> str:
+    return "r"
+
+def up() -> str:
+    return "u"
+
+def down() -> str:
+    return "d"
+
+def parse_input(cmds: List) -> str:
+    if len(cmds) == 0: return "Please enter a valid command... ('help' for more info)"
+    
+    if cmds[0] == "help":
+        if len(cmds) > 1: return game_help(cmds[1])
+        else: return game_help()
+    
+    elif cmds[0] == "exit": return "exit"
+    
+    elif cmds[0] == "l": return left()
+    elif cmds[0] == "r": return right()
+    elif cmds[0] == "u": return up()
+    elif cmds[0] == "d": return down()
+    else: return game_help()

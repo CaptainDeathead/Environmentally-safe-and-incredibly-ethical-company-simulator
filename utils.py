@@ -12,7 +12,7 @@ def cls():
     else:
         system('clear')
         if not shown_platform_error:
-            print(f"Device platform recognised as: '{name}'. Using 'clear' as the default command to clear screen.\nThis message will not be shown again.")
+            print(f"Device platform recognised as: '{name}'.\nUsing 'clear' as the default command to clear screen.\n\nThis message will not be shown again.\n")
             shown_platform_error = True
 
 def unique_number_from_pair(a, b):

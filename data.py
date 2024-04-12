@@ -1,6 +1,6 @@
 
 
-CHUNK_SIZE = 9
+CHUNK_SIZE = 18
 SEED = 12346
 
 DEPOSIT_TYPES = ['none', 'fossil', 'coal', 'oil', 'gas']

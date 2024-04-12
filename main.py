@@ -8,5 +8,6 @@ class Main:
         self.game.main()
 
 if __name__ == "__main__":
+    print("Loading game...")
     main: Main = Main()
     main.main()

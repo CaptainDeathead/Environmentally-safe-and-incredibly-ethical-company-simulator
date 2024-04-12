@@ -20,3 +20,11 @@ class ChunkManager:
                 chunks[y].append(Chunk(position, unique_number_from_pair(x+self.position[0], y+position[1])))
 
         return chunks
+    
+    # Move player location and re-calculate chunks around it
+    def move(self, x, y):
+        if x != 0: self.position = (self.position[0]+x, self.position[1])
+        elif y != 0: self.position = (self.position[0], self.position[1]+y)
+        else: raise Exception("x or y must not equal 0!")
+
+        self.chunks = self.load_chunks(self.position)

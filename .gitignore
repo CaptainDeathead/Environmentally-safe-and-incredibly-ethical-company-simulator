@@ -1,0 +1,4 @@
+.vscode/
+__pycache__/
+Chunks/__pycache__/
+Ui/__pycache__/
