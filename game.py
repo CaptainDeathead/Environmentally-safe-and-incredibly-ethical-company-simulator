@@ -1,5 +1,5 @@
 from typing import List
-from chunk_manager import ChunkManager
+from Chunks.chunk_manager import ChunkManager
 from data import *
 
 class Game:
