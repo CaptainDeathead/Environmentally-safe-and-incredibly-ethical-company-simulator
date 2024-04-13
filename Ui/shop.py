@@ -14,3 +14,9 @@ class Shop:
             ret_str += f"\n    - {item}: ${str(SHOP_ITEM_PRICES[item])}"
 
         return ret_str + "\n"
+    
+    def buy_item(self, item: str) -> tuple:
+        if item in SHOP_ITEMS:
+            # DOES NOT CHECK IF ENOUGH MONEY
+            return str(SHOP_ITEM_PRICES[item])
+        else: return "none"

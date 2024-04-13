@@ -32,7 +32,19 @@ class Game:
                 elif res == "d": self.chunk_manager.move(0, -1)
                 res = ""
             elif res == "exit": exit()
-            elif res in list(self.menu_manager.action_bindings.keys()): res = self.menu_manager.find_and_draw_menu(res)
+            elif res in list(self.menu_manager.action_bindings.keys()): res = self.menu_manager.find_and_draw_menu([res])
+            elif ";" in res:
+                res = res.split(";")
+                if res[0] == "store" and res[1].split("|")[0] == "buy_item":
+                    item = res[1].split("|")[1]
+                    print(item)
+                    res = self.menu_manager.find_and_draw_menu(["buy", item])
+                    if res == "none": res = "Failed to buy item. Does not exist! Type 'help' for more info...\n"
+                    else:
+                        if self.money >= int(res):
+                            self.money -= int(res)
+                            res = f"Successfully purchased {item}!\n"
+                        else: print("You do not have enough money to buy this item!\n")
 
             print(display_hud(self.money, self.income_rate, self.xp, self.chunk_manager.position))
 

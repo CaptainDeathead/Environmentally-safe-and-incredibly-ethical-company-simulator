@@ -49,6 +49,11 @@ def parse_input(cmds: List) -> str:
     elif cmds[0] == "exit": return "exit"
 
     elif cmds[0] == "shop": return "shop"
+    elif cmds[0] == "buy":
+        if len(cmds) > 1:
+            if len(cmds[1]) > 0: return "store;buy_item|" + cmds[1]
+            else: return "Please provide a valid item to buy... ('help' for more info)"
+        else: return "Please provide a valid item to buy... ('help' for more info)"
     
     elif len(cmds) == 1 and len(cmds[0]) == 0: return ""
 
