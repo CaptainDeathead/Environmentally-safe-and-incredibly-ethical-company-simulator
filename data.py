@@ -6,7 +6,7 @@ SEED = 314159
 DEPOSIT_TYPES = ['none', 'fossil', 'coal', 'oil', 'gas']
 
 DEPOSIT_SPAWN_CHANCES = { # higher is better
-    'none': 400,
+    'none': 8000,
     'fossil': 20,
     'coal': 10,
     'oil': 6,
