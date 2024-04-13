@@ -2,7 +2,7 @@ from typing import List
 from Chunks.chunk_manager import ChunkManager
 from data import *
 from utils import *
-from user_input import parse_input
+from input_parser import parse_input
 from Ui.table import table_from_2d_list
 from Ui.hud import display_hud
 

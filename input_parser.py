@@ -9,9 +9,17 @@ Movement:
     - up (u): Move up
     - down (d): Move down
 """
+    elif help_type == "map":
+        return """
+Map:
+    - f: fossil
+    - c: coal
+    - o: oil
+    - g: gas"""
     else: return """
 Commands:
     - For help with movment type: 'help movement'
+    - For help with map keys type: 'map help'
 
     - 'exit': Quit the game!
 
