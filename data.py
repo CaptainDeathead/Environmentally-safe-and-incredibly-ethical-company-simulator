@@ -20,3 +20,9 @@ SYMBOLS = {
     'oil': 'o',
     'gas': 'g'
 }
+
+SHOP_ITEMS = ['wire']
+
+SHOP_ITEM_PRICES = {
+    'wire': 0
+}
