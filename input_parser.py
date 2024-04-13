@@ -15,11 +15,12 @@ Map:
     - f: fossil
     - c: coal
     - o: oil
-    - g: gas"""
+    - g: gas
+"""
     else: return """
 Commands:
     - For help with movment type: 'help movement'
-    - For help with map keys type: 'map help'
+    - For help with map keys type: 'help map'
 
     - 'exit': Quit the game!
 
