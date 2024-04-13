@@ -39,14 +39,15 @@ class Game:
                     item = res[1].split("|")[1]
                     buy: bool = True
                     while 1:
-                        ammount = input("Ammount to purchase ('c' to cancel): ")
+                        ammount = input("Ammount to purchase ('c' to cancel, 1 is the default: `enter`): ")
                         if ammount == 'c':
                             buy = False
                             break
+                        elif ammount == "": ammount = 1
 
                         try:
                             ammount = int(ammount)
-                            if ammount == 0: print("Please enter an ammount greater than 0!")
+                            if ammount <= 0: print("Please enter an ammount greater than 0!")
                             else: break
                         except ValueError: print("Please enter a valid ammount!")
 
@@ -58,6 +59,7 @@ class Game:
                                 self.money -= int(res)
                                 res = f"Successfully purchased {ammount} {item}!\n"
                             else: print("You do not have enough money to buy this item!\n")
+                    else: res = ""
 
             print(display_hud(self.money, self.income_rate, self.xp, self.chunk_manager.position))
 
