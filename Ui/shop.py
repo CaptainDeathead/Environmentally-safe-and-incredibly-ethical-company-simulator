@@ -15,8 +15,7 @@ class Shop:
 
         return ret_str + "\n"
     
-    def buy_item(self, item: str) -> tuple:
+    def buy_item(self, item: str, ammount: int) -> tuple:
         if item in SHOP_ITEMS:
-            # DOES NOT CHECK IF ENOUGH MONEY
-            return str(SHOP_ITEM_PRICES[item])
+            return str(SHOP_ITEM_PRICES[item]*ammount)
         else: return "none"

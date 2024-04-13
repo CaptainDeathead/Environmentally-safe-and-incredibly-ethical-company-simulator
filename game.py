@@ -37,14 +37,27 @@ class Game:
                 res = res.split(";")
                 if res[0] == "store" and res[1].split("|")[0] == "buy_item":
                     item = res[1].split("|")[1]
-                    print(item)
-                    res = self.menu_manager.find_and_draw_menu(["buy", item])
-                    if res == "none": res = "Failed to buy item. Does not exist! Type 'help' for more info...\n"
-                    else:
-                        if self.money >= int(res):
-                            self.money -= int(res)
-                            res = f"Successfully purchased {item}!\n"
-                        else: print("You do not have enough money to buy this item!\n")
+                    buy: bool = True
+                    while 1:
+                        ammount = input("Ammount to purchase ('c' to cancel): ")
+                        if ammount == 'c':
+                            buy = False
+                            break
+
+                        try:
+                            ammount = int(ammount)
+                            if ammount == 0: print("Please enter an ammount greater than 0!")
+                            else: break
+                        except ValueError: print("Please enter a valid ammount!")
+
+                    if buy:
+                        res = self.menu_manager.find_and_draw_menu(["buy", item, ammount])
+                        if res == "none": res = "Failed to buy item. Does not exist!\nType 'help' for more info...\n"
+                        else:
+                            if self.money >= int(res):
+                                self.money -= int(res)
+                                res = f"Successfully purchased {ammount} {item}!\n"
+                            else: print("You do not have enough money to buy this item!\n")
 
             print(display_hud(self.money, self.income_rate, self.xp, self.chunk_manager.position))
 

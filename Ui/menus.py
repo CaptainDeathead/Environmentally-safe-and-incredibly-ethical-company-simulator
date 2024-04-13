@@ -11,5 +11,5 @@ class MenuManager:
 
     def find_and_draw_menu(self, cmd: List) -> str:
         if cmd[0] in self.action_bindings: return self.action_bindings[cmd[0]]()
-        elif cmd[0] == "buy": return self.shop.buy_item(cmd[1])
+        elif cmd[0] == "buy": return self.shop.buy_item(cmd[1], cmd[2])
         else: raise Exception(f"No menu found for '{cmd[0]}'!")
