@@ -47,6 +47,8 @@ def parse_input(cmds: List) -> str:
         else: return game_help()
     
     elif cmds[0] == "exit": return "exit"
+
+    elif cmds[0] == "shop": return "shop"
     
     elif len(cmds) == 1 and len(cmds[0]) == 0: return ""
 

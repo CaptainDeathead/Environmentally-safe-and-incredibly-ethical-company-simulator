@@ -13,4 +13,4 @@ class Shop:
         for item in SHOP_ITEMS:
             ret_str += f"\n    - {item}: ${str(SHOP_ITEM_PRICES[item])}"
 
-        return ret_str
+        return ret_str + "\n"

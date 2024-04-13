@@ -5,10 +5,12 @@ from utils import *
 from input_parser import parse_input
 from Ui.table import table_from_2d_list
 from Ui.hud import display_hud
+from Ui.menus import MenuManager
 
 class Game:
     def __init__(self):
         self.chunk_manager: ChunkManager = ChunkManager()
+        self.menu_manager: MenuManager = MenuManager()
         self.money = 1000
         self.income_rate = 0
         self.xp = 1
@@ -30,6 +32,7 @@ class Game:
                 elif res == "d": self.chunk_manager.move(0, -1)
                 res = ""
             elif res == "exit": exit()
+            elif res in list(self.menu_manager.action_bindings.keys()): res = self.menu_manager.find_and_draw_menu(res)
 
             print(display_hud(self.money, self.income_rate, self.xp, self.chunk_manager.position))
 
