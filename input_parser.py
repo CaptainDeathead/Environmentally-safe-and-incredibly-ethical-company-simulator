@@ -22,6 +22,8 @@ Commands:
     - For help with movment type: 'help movement'
     - For help with map keys type: 'help map'
 
+    - 'shop': View the shop
+    - 'buy <item>': Buy an item from the shop
     - 'exit': Quit the game!
 
     - More to come...
