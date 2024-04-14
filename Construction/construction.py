@@ -1,6 +1,6 @@
 from typing import List
 
-class Construction:
+class ConstructionManager:
     def __init__(self):
         self.wires: List = []
         self.chunk_connectors: List = []
