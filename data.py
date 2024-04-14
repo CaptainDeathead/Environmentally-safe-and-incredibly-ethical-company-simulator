@@ -18,7 +18,9 @@ SYMBOLS = {
     'fossil': 'f',
     'coal': 'c',
     'oil': 'o',
-    'gas': 'g'
+    'gas': 'g',
+
+    'wire': '#'
 }
 
 SHOP_ITEMS = ['wire']
