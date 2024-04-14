@@ -42,10 +42,33 @@ class Game:
                         res = f"Successfully purchased {item}!\n"
                         
                         if SHOP_ITEM_TYPES[item] == 0:
-                            self.construction_manager.build(item, self.chunk_manager.chunks[1][1].chunk_id)
+                            self.construction_manager.build(item, self.chunk_manager.chunks[1][1].chunk_id, self.draw_map, cls)
 
                     else: print("You do not have enough money to buy this item!\n")
         return res
+    
+    def draw_map(self):
+        curr_chunk: Chunk = self.chunk_manager.chunks[1][1]
+        map_render: list = []
+
+        # draw wires
+        if curr_chunk.chunk_id in self.construction_manager.wires:
+            curr_chunk_list = []
+            for line in curr_chunk.chunk_map:
+                curr_chunk_list.append(list(line))
+
+            for wire in self.construction_manager.wires[curr_chunk.chunk_id]:
+                if wire == None: continue
+                for child_wire in wire.iterate_children():
+                    curr_chunk_list[child_wire.location[1]][child_wire.location[0]] = SYMBOLS['wire']
+
+            for line in curr_chunk_list:
+                map_render.append("".join(line))
+        else:
+            map_render = curr_chunk.chunk_map.copy()
+
+        print(table_from_2d_list(map_render))
+        print()
 
     def main(self):
         cls()
@@ -59,26 +82,7 @@ class Game:
 
             print(display_hud(self.money, self.income_rate, self.xp, self.chunk_manager.position))
 
-            curr_chunk: Chunk = self.chunk_manager.chunks[1][1]
-            map_render: list = []
-
-            # draw wires
-            if curr_chunk.chunk_id in self.construction_manager.wires:
-                curr_chunk_list = []
-                for line in curr_chunk.chunk_map:
-                    curr_chunk_list.append(list(line))
-
-                for wire in self.construction_manager.wires[curr_chunk.chunk_id]:
-                    for child_wire in wire.iterate_children():
-                        curr_chunk_list[child_wire.location[1]][child_wire.location[0]] = SYMBOLS['wire']
-
-                for line in curr_chunk_list:
-                    map_render.append("".join(line))
-            else:
-                map_render = curr_chunk.chunk_map.copy()
-
-            print(table_from_2d_list(map_render))
-            print()
+            self.draw_map()
 
             print(res)
 
