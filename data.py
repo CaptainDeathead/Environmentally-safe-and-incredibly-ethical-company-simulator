@@ -28,3 +28,11 @@ SHOP_ITEMS = ['wire']
 SHOP_ITEM_PRICES = {
     'wire': 0
 }
+
+SHOP_ITEM_TYPES = {
+    'wire': 0
+}
+
+SHOP_ITEM_TYPES_TO_STR = {
+    0: 'constructable'
+}
