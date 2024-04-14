@@ -15,7 +15,7 @@ class Shop:
 
         return ret_str + "\n"
     
-    def buy_item(self, item: str, ammount: int) -> tuple:
+    def buy_item(self, item: str) -> tuple:
         if item in SHOP_ITEMS:
-            return str(SHOP_ITEM_PRICES[item]*ammount)
+            return str(SHOP_ITEM_PRICES[item])
         else: return "none"
