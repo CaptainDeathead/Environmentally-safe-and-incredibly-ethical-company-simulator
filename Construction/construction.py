@@ -1,7 +1,7 @@
-from typing import Dict, List
+from typing import Dict, List, Tuple
 from Construction.wire import Wire
 from Construction.generators import SolarPanel
-from data import CHUNK_SIZE
+from data import CHUNK_SIZE, CHUNK_CENTER
 
 class ConstructionManager:
     def __init__(self):
@@ -10,6 +10,22 @@ class ConstructionManager:
         self.hubs: Dict = {}
         self.extractors: Dict = {}
         self.generators: Dict = {}
+
+    def wire_connects_hub(self, wire: Wire, chunk_id: int) -> Tuple:
+        if chunk_id not in self.hubs: return (9, 9)
+
+        children: List = list(wire.iterate_children())
+        
+        if len(children) > 0: wire_end = children[-1]
+        else: wire_end = wire
+
+        for y in range(-1, 2):
+            for x in range(-1, 2):
+                node_location: Tuple = (CHUNK_CENTER+x, CHUNK_CENTER+y)
+                if self.hubs[chunk_id].nodes[y][x] is False and wire_end.location == node_location:
+                    return (x, y)
+                
+        return (9, 9)
 
     def build(self, item, chunk_id: int = None, draw_map_func = None, cls = None):
         if item == 'wire': self.place_wire(chunk_id, draw_map_func, cls)
@@ -156,7 +172,23 @@ class ConstructionManager:
             if chunk_id not in self.generators:
                 self.generators[chunk_id] = [SolarPanel(chunk_id, (new_point_x, new_point_y))]
             else:
-                self.chunk_connectors.append(SolarPanel(chunk_id, (new_point_x, new_point_y)))
+                self.generators[chunk_id].append(SolarPanel(chunk_id, (new_point_x, new_point_y)))
 
             cls()
             break
+
+    def connect_wires(self, chunk_id: int):
+        if chunk_id not in self.hubs: return
+        
+        self.hubs[chunk_id].reset_nodes()
+
+        for generator in self.generators[chunk_id]:
+            generator.connected = False
+            if chunk_id not in self.wires: return
+            for chained_wire in self.wires[chunk_id]:
+                x, y = self.wire_connects_hub(chained_wire, chunk_id)
+                if x != 9:
+                    for wire in chained_wire.iterate_children():
+                        if wire.location == generator.location:
+                            self.hubs[chunk_id].nodes[y][x] = True
+                            generator.connected = True

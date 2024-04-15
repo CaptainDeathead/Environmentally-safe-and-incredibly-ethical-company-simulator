@@ -1,7 +1,8 @@
 
 
-CHUNK_SIZE = 18
-SEED = 314159
+CHUNK_SIZE: int = 18
+CHUNK_CENTER: int = int(CHUNK_SIZE/2)
+SEED: int = 314159
 
 DEPOSIT_TYPES = ['none', 'fossil', 'coal', 'oil', 'gas']
 

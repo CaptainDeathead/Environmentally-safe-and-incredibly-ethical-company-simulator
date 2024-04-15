@@ -9,13 +9,14 @@ from Ui.menus import MenuManager
 from Construction.construction import ConstructionManager
 from Chunks.chunk import Chunk
 from Construction.hub import Hub
+from time import time
 
 class Game:
     def __init__(self):
         self.chunk_manager: ChunkManager = ChunkManager()
         self.menu_manager: MenuManager = MenuManager()
         self.construction_manager: ConstructionManager = ConstructionManager()
-        self.construction_manager.hubs[self.chunk_manager.chunks[1][1].chunk_id] = [Hub(self.chunk_manager.chunks[1][1].chunk_id)]
+        self.construction_manager.hubs[self.chunk_manager.chunks[1][1].chunk_id] = Hub(self.chunk_manager.chunks[1][1].chunk_id)
         self.money = 10000
         self.income_rate = 0
         self.xp = 1
@@ -42,9 +43,10 @@ class Game:
                     if self.money >= int(res):
                         self.money -= int(res)
                         res = f"Successfully purchased {item}!\n"
-                        
+
                         if SHOP_ITEM_TYPES[item] == 0:
                             self.construction_manager.build(item, self.chunk_manager.chunks[1][1].chunk_id, self.draw_map, cls)
+                            self.construction_manager.connect_wires(self.chunk_manager.chunks[1][1].chunk_id)
 
                     else: print("You do not have enough money to buy this item!\n")
         return res
@@ -71,11 +73,9 @@ class Game:
 
         # draw hub
         if curr_chunk.chunk_id in self.construction_manager.hubs:
-            chunk_center: int = int(CHUNK_SIZE/2)
-            for hub in self.construction_manager.hubs[curr_chunk.chunk_id]:
-                for y in range(-1, 2):
-                    for x in range(-1, 2):
-                        curr_chunk_list[chunk_center+y][chunk_center+x] = SYMBOLS['hub']
+            for y in range(-1, 2):
+                for x in range(-1, 2):
+                    curr_chunk_list[CHUNK_CENTER+y][CHUNK_CENTER+x] = SYMBOLS['hub']
 
         for line in curr_chunk_list:
             map_render.append("".join(line))
@@ -88,8 +88,17 @@ class Game:
         print(parse_input([""]))
         cmds: List = []
         res: str = ""
+        last_money_update = time()
         while 1:
             cls()
+
+            if time() - last_money_update > 1:
+                if self.chunk_manager.chunks[1][1].chunk_id in self.construction_manager.generators:
+                    for generator in self.construction_manager.generators[self.chunk_manager.chunks[1][1].chunk_id]:
+                        if not generator.connected: continue
+                        self.money += SHOP_ITEM_PRICES[generator.GENERATOR_TYPE]
+
+                last_money_update = time()
 
             res = self.handle_ui_messages(cmds)
 

@@ -6,5 +6,6 @@ class SolarPanel:
         self.chunk_id = chunk_id
         self.location = location
         self.wire: Wire = None
+        self.connected: bool = False
         self.DEPENDS_ON_EXTRACTOR: bool = False
         self.GENERATOR_TYPE: str = 'solar_panel'
