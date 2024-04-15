@@ -8,12 +8,14 @@ from Ui.hud import display_hud
 from Ui.menus import MenuManager
 from Construction.construction import ConstructionManager
 from Chunks.chunk import Chunk
+from Construction.hub import Hub
 
 class Game:
     def __init__(self):
         self.chunk_manager: ChunkManager = ChunkManager()
         self.menu_manager: MenuManager = MenuManager()
         self.construction_manager: ConstructionManager = ConstructionManager()
+        self.construction_manager.hubs[self.chunk_manager.chunks[1][1].chunk_id] = [Hub(self.chunk_manager.chunks[1][1].chunk_id)]
         self.money = 1000
         self.income_rate = 0
         self.xp = 1
@@ -50,22 +52,29 @@ class Game:
     def draw_map(self):
         curr_chunk: Chunk = self.chunk_manager.chunks[1][1]
         map_render: list = []
+        curr_chunk_list: list = []
+
+        for line in curr_chunk.chunk_map:
+            curr_chunk_list.append(list(line))
 
         # draw wires
         if curr_chunk.chunk_id in self.construction_manager.wires:
-            curr_chunk_list = []
-            for line in curr_chunk.chunk_map:
-                curr_chunk_list.append(list(line))
-
             for wire in self.construction_manager.wires[curr_chunk.chunk_id]:
                 if wire == None: continue
                 for child_wire in wire.iterate_children():
                     curr_chunk_list[child_wire.location[1]][child_wire.location[0]] = SYMBOLS['wire']
+                
+        #for generator in self.construction_manager.gene
 
-            for line in curr_chunk_list:
-                map_render.append("".join(line))
-        else:
-            map_render = curr_chunk.chunk_map.copy()
+        chunk_center: int = int(CHUNK_SIZE/2)
+        for hub in self.construction_manager.hubs[curr_chunk.chunk_id]:
+            for y in range(-1, 2):
+                for x in range(-1, 2):
+                    curr_chunk_list[chunk_center+y][chunk_center+x] = SYMBOLS['hub']
+                    print(curr_chunk_list[chunk_center+y][chunk_center+x])
+
+        for line in curr_chunk_list:
+            map_render.append("".join(line))
 
         print(table_from_2d_list(map_render))
         print()

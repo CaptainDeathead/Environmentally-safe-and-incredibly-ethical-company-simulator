@@ -6,7 +6,7 @@ class ConstructionManager:
     def __init__(self):
         self.wires: Dict = {}
         self.chunk_connectors: List = []
-        self.hubs: List = []
+        self.hubs: Dict = {}
         self.extractors: List = []
         self.generators: List = []
 

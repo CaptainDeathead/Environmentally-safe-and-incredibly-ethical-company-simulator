@@ -20,19 +20,27 @@ SYMBOLS = {
     'oil': 'o',
     'gas': 'g',
 
-    'wire': '#'
+    'hub': '%',
+    'wire': '@',
+    'solar panel': '#'
 }
 
-SHOP_ITEMS = ['wire']
+SHOP_ITEMS = ['wire', 'solar panel']
 
 SHOP_ITEM_PRICES = {
-    'wire': 0
+    'wire': 0,
+    'solar panel': 5000
 }
 
 SHOP_ITEM_TYPES = {
-    'wire': 0
+    'wire': 0,
+    'solar panel': 0
 }
 
 SHOP_ITEM_TYPES_TO_STR = {
     0: 'constructable'
+}
+
+POWER_OUTPUTS = {
+    'solar panel': 250
 }
