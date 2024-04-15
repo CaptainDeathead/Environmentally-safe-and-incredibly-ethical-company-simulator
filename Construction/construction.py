@@ -53,13 +53,24 @@ class ConstructionManager:
             if point_type == "next":
                 new_wire_and_children = list(new_wire.iterate_children())
                 new_wire_and_children.insert(0, new_wire)
+                
                 if new_wire_and_children[-1].location == (new_point_x, new_point_y):
                     cls()
                     print("You just entered that point, try a different one!")
                     continue
 
+                # check if wire already exists at the new point
+                collides = False
+                for wire in new_wire_and_children:
+                    if wire.location == (new_point_x, new_point_y):
+                        cls()
+                        print("You've already entered that point, try a different one!")
+                        collides = True
+                        break
+
+                if collides: continue
+
                 filling_x: bool = new_point_y == new_wire_and_children[-1].location[1] # if the current y is equal to the last y we are filling x
-                #print(f"filling x: {filling_x}, new x: {new_point_x}, new y: {new_point_y}, last x: {new_wire_and_children[-1].location[0]}, last y: {new_wire_and_children[-1].location[1]}")
                 if (filling_x and new_point_y != new_wire_and_children[-1].location[1]) or ((not filling_x) and new_point_x != new_wire_and_children[-1].location[0]):
                     cls()
                     print("Please ensure you enter the coordinates on either the x or y axis but not both so that the wires are in streight lines!\ne.g. The previous point was '2,2' then the next point has to be something like: '5,2' or '2,1' not '3, 6' because it would be diagonal.")
@@ -106,21 +117,3 @@ class ConstructionManager:
             self.wires[chunk_id][-1] = new_wire
             point_type = "next"
             cls()
-
-        #if len(points) == 0: return
-        #
-        #if len(points) == 1:
-        #    self.wires[chunk_id].append(Wire(points[0], None))
-        #    return
-        #
-        #if len(points) == 2:
-        #    self.wires[chunk_id].append(Wire(points[0], Wire(points[1], None)))
-        #    return
-#
-        ## new wire will contain a reference to current_wire (they reference the same object)
-        ## basicly new_wire is a reference to the initial wire created, and has current_wire keeps walking further and further, new_wire still contains the reference to the starting wire, which is also referenced by current wire and so keeps being updated by current_wire
-        #current_wire = new_wire
-        #for point in points[1:]:
-        #    child_wire = Wire(point, None)
-        #    current_wire.add_child(child_wire)
-        #    current_wire = child_wire
