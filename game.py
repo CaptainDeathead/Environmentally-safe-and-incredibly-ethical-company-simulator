@@ -71,7 +71,6 @@ class Game:
             for y in range(-1, 2):
                 for x in range(-1, 2):
                     curr_chunk_list[chunk_center+y][chunk_center+x] = SYMBOLS['hub']
-                    print(curr_chunk_list[chunk_center+y][chunk_center+x])
 
         for line in curr_chunk_list:
             map_render.append("".join(line))
