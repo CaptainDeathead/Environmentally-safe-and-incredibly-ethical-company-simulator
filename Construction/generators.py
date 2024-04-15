@@ -7,3 +7,4 @@ class SolarPanel:
         self.location = location
         self.wire: Wire = None
         self.DEPENDS_ON_EXTRACTOR: bool = False
+        self.GENERATOR_TYPE: str = 'solar_panel'

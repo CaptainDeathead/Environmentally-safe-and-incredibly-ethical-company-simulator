@@ -22,19 +22,19 @@ SYMBOLS = {
 
     'hub': '%',
     'wire': '@',
-    'solar panel': '#'
+    'solar_panel': '#'
 }
 
-SHOP_ITEMS = ['wire', 'solar panel']
+SHOP_ITEMS = ['wire', 'solar_panel']
 
 SHOP_ITEM_PRICES = {
     'wire': 0,
-    'solar panel': 5000
+    'solar_panel': 5000
 }
 
 SHOP_ITEM_TYPES = {
     'wire': 0,
-    'solar panel': 0
+    'solar_panel': 0
 }
 
 SHOP_ITEM_TYPES_TO_STR = {
@@ -42,5 +42,5 @@ SHOP_ITEM_TYPES_TO_STR = {
 }
 
 POWER_OUTPUTS = {
-    'solar panel': 250
+    'solar_panel': 250
 }

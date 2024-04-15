@@ -16,7 +16,7 @@ class Game:
         self.menu_manager: MenuManager = MenuManager()
         self.construction_manager: ConstructionManager = ConstructionManager()
         self.construction_manager.hubs[self.chunk_manager.chunks[1][1].chunk_id] = [Hub(self.chunk_manager.chunks[1][1].chunk_id)]
-        self.money = 1000
+        self.money = 10000
         self.income_rate = 0
         self.xp = 1
 
@@ -64,13 +64,18 @@ class Game:
                 for child_wire in wire.iterate_children():
                     curr_chunk_list[child_wire.location[1]][child_wire.location[0]] = SYMBOLS['wire']
                 
-        #for generator in self.construction_manager.gene
+        # draw generators
+        if curr_chunk.chunk_id in self.construction_manager.generators:
+            for generator in self.construction_manager.generators[curr_chunk.chunk_id]:
+                curr_chunk_list[generator.location[1]][generator.location[0]] = SYMBOLS[generator.GENERATOR_TYPE]
 
-        chunk_center: int = int(CHUNK_SIZE/2)
-        for hub in self.construction_manager.hubs[curr_chunk.chunk_id]:
-            for y in range(-1, 2):
-                for x in range(-1, 2):
-                    curr_chunk_list[chunk_center+y][chunk_center+x] = SYMBOLS['hub']
+        # draw hub
+        if curr_chunk.chunk_id in self.construction_manager.hubs:
+            chunk_center: int = int(CHUNK_SIZE/2)
+            for hub in self.construction_manager.hubs[curr_chunk.chunk_id]:
+                for y in range(-1, 2):
+                    for x in range(-1, 2):
+                        curr_chunk_list[chunk_center+y][chunk_center+x] = SYMBOLS['hub']
 
         for line in curr_chunk_list:
             map_render.append("".join(line))

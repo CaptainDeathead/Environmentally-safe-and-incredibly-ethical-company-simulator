@@ -1,5 +1,6 @@
 from typing import Dict, List
 from Construction.wire import Wire
+from Construction.generators import SolarPanel
 from data import CHUNK_SIZE
 
 class ConstructionManager:
@@ -7,11 +8,12 @@ class ConstructionManager:
         self.wires: Dict = {}
         self.chunk_connectors: List = []
         self.hubs: Dict = {}
-        self.extractors: List = []
-        self.generators: List = []
+        self.extractors: Dict = {}
+        self.generators: Dict = {}
 
     def build(self, item, chunk_id: int = None, draw_map_func = None, cls = None):
         if item == 'wire': self.place_wire(chunk_id, draw_map_func, cls)
+        elif item == "solar_panel": self.place_generator(chunk_id, item, draw_map_func, cls)
 
     def place_wire(self, chunk_id: int, draw_map_func, cls):
         points: List = []
@@ -49,6 +51,11 @@ class ConstructionManager:
 
             new_point_x = int(new_point_x)-1
             new_point_y = int(new_point_y)-1
+
+            if new_point_x > CHUNK_SIZE or new_point_y > CHUNK_SIZE:
+                cls()
+                print(f"Please make sure coordinates are between 1 and {CHUNK_SIZE}")
+                continue
 
             if point_type == "next":
                 new_wire_and_children = list(new_wire.iterate_children())
@@ -117,3 +124,39 @@ class ConstructionManager:
             self.wires[chunk_id][-1] = new_wire
             point_type = "next"
             cls()
+
+    def place_generator(self, chunk_id: int, generator_type: str, draw_map_func, cls):
+        while 1:
+            print(f"Building: {generator_type}\n")
+            draw_map_func()
+            new_point: str = input(f"Enter the coordinates in ('x,y' | e.g. '1,3') format between 1 and {CHUNK_SIZE}: ")
+
+            if ',' not in new_point:
+                cls()
+                print("Incorrect format! Make sure you have a comma.")
+                continue
+            
+            new_point_x, new_point_y = new_point.split(',')
+            new_point_x = new_point_x.replace(' ', '')
+            new_point_y = new_point_y.replace(' ', '')
+
+            if not (new_point_x.isdigit() and new_point_y.isdigit()):
+                cls()
+                print("Please make sure your coordinates are valid whole numbers!")
+                continue
+
+            new_point_x = int(new_point_x)-1
+            new_point_y = int(new_point_y)-1
+
+            if new_point_x > CHUNK_SIZE or new_point_y > CHUNK_SIZE:
+                cls()
+                print(f"Please make sure coordinates are between 1 and {CHUNK_SIZE}")
+                continue
+
+            if chunk_id not in self.generators:
+                self.generators[chunk_id] = [SolarPanel(chunk_id, (new_point_x, new_point_y))]
+            else:
+                self.chunk_connectors.append(SolarPanel(chunk_id, (new_point_x, new_point_y)))
+
+            cls()
+            break
