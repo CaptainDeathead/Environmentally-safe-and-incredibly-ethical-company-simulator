@@ -11,7 +11,7 @@ class Shop:
         ret_str: str = "Shop:"
         
         for item in SHOP_ITEMS:
-            ret_str += f"\n    - {item}: ${str(SHOP_ITEM_PRICES[item])}"
+            ret_str += "\n    - {}: ${:,}".format(item, int(SHOP_ITEM_PRICES[item]))
 
         return ret_str + "\n"
     
