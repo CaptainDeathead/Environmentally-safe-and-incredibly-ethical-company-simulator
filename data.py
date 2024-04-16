@@ -32,13 +32,21 @@ SHOP_ITEMS = ['wire', 'solar_panel', 'wind_turbine']
 SHOP_ITEM_PRICES = {
     'wire': 0,
     'solar_panel': 5000,
-    'wind_turbine': 15000
+    'wind_turbine': 15000,
+    'fossil_generator': 40_000,
+    'coal_generator': 100_000,
+    'oil_generator': 220_000,
+    'gas_generator': 500_000
 }
 
 SHOP_ITEM_TYPES = {
     'wire': 0,
     'solar_panel': 0,
-    'wind_turbine': 0
+    'wind_turbine': 0,
+    'fossil_generator': 0,
+    'coal_generator': 0,
+    'oil_generator': 0,
+    'gas_generator': 0
 }
 
 SHOP_ITEM_TYPES_TO_STR = {
@@ -47,5 +55,9 @@ SHOP_ITEM_TYPES_TO_STR = {
 
 POWER_OUTPUTS = {
     'solar_panel': 250,
-    'wind_turbine': 900
+    'wind_turbine': 900,
+    'fossil_generator': 2400,
+    'coal_generator': 9200,
+    'oil_generator': 21_300,
+    'gas_generator': 54_600
 }
