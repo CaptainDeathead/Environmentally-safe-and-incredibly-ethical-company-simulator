@@ -46,6 +46,7 @@ class Game:
 
                         res = f"Successfully purchased {item}!\n"
 
+                        # construction
                         if SHOP_ITEM_TYPES[item] == 0:
                             len_generators_before = len(self.construction_manager.generators)
                             self.construction_manager.build(item, self.chunk_manager.chunks[1][1].chunk_id, self.draw_map, cls)
@@ -55,6 +56,15 @@ class Game:
                                 self.money = money_before
 
                             self.construction_manager.connect_wires(self.chunk_manager.chunks[1][1].chunk_id)
+                        
+                        # chunk upgrade
+                        elif SHOP_ITEM_TYPES[item] == 1:
+                            if self.chunk_manager.chunks[1][1].chunk_id in self.construction_manager.hubs:
+                                res = "You already have a hub in this chunk!\nYou have been refunded\n"
+                                self.money = money_before
+
+                            else:
+                                self.construction_manager.hubs[self.chunk_manager.chunks[1][1].chunk_id] = Hub(self.chunk_manager.chunks[1][1].chunk_id)
 
                     else: print("You do not have enough money to buy this item!\n")
         return res

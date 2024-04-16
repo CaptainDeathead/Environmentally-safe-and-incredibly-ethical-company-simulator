@@ -39,7 +39,7 @@ GENERATOR_DEPOSITS = {
     'gas_generator': 'gas'
 }
 
-SHOP_ITEMS = ['wire', 'solar_panel', 'wind_turbine', 'fossil_generator', 'coal_generator', 'oil_generator', 'gas_generator']
+SHOP_ITEMS = ['wire', 'solar_panel', 'wind_turbine', 'fossil_generator', 'coal_generator', 'oil_generator', 'gas_generator', 'hub']
 
 SHOP_ITEM_PRICES = {
     'wire': 0,
@@ -48,7 +48,8 @@ SHOP_ITEM_PRICES = {
     'fossil_generator': 40_000,
     'coal_generator': 100_000,
     'oil_generator': 220_000,
-    'gas_generator': 500_000
+    'gas_generator': 500_000,
+    'hub': 30_000
 }
 
 SHOP_ITEM_TYPES = {
@@ -58,11 +59,13 @@ SHOP_ITEM_TYPES = {
     'fossil_generator': 0,
     'coal_generator': 0,
     'oil_generator': 0,
-    'gas_generator': 0
+    'gas_generator': 0,
+    'hub': 1
 }
 
 SHOP_ITEM_TYPES_TO_STR = {
-    0: 'constructable'
+    0: 'constructable',
+    1: 'chunk_upgrade'
 }
 
 POWER_OUTPUTS = {
