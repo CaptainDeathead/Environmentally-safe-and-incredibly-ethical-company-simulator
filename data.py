@@ -27,6 +27,13 @@ SYMBOLS = {
     'wind_turbine': '~'
 }
 
+GENERATOR_DEPOSITS = {
+    'fossil_generator': 'fossil',
+    'coal_generator': 'coal',
+    'oil_generator': 'oil',
+    'gas_generator': 'gas'
+}
+
 SHOP_ITEMS = ['wire', 'solar_panel', 'wind_turbine', 'fossil_generator', 'coal_generator', 'oil_generator', 'gas_generator']
 
 SHOP_ITEM_PRICES = {
