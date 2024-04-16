@@ -1,7 +1,7 @@
 from typing import Dict, List, Tuple
 from Construction.wire import Wire
-from Construction.generators import SolarPanel, WindTurbine
-from data import CHUNK_SIZE, CHUNK_CENTER
+from Construction.generators import *
+from data import CHUNK_SIZE, CHUNK_CENTER, GENERATOR_DEPOSITS, SYMBOLS
 
 class ConstructionManager:
     def __init__(self):
@@ -29,7 +29,7 @@ class ConstructionManager:
 
     def build(self, item, chunk_id: int = None, draw_map_func = None, cls = None):
         if item == 'wire': self.place_wire(chunk_id, draw_map_func, cls)
-        elif item in ("solar_panel", "wind_turbine"): self.place_generator(chunk_id, item, draw_map_func, cls)
+        elif item in ("solar_panel", "wind_turbine") or item in GENERATOR_DEPOSITS: self.place_generator(chunk_id, item, draw_map_func, cls)
 
     def place_wire(self, chunk_id: int, draw_map_func, cls):
         points: List = []
@@ -144,7 +144,7 @@ class ConstructionManager:
     def place_generator(self, chunk_id: int, generator_type: str, draw_map_func, cls):
         while 1:
             print(f"Building: {generator_type}\n")
-            draw_map_func()
+            map_render: List = draw_map_func()
             new_point: str = input(f"Enter the coordinates in ('x,y' | e.g. '1,3') format between 1 and {CHUNK_SIZE}: ")
 
             if ',' not in new_point:
@@ -172,12 +172,46 @@ class ConstructionManager:
             if chunk_id not in self.generators:
                 if generator_type == 'solar_panel': self.generators[chunk_id] = [SolarPanel(chunk_id, (new_point_x, new_point_y))]
                 elif generator_type == 'wind_turbine': self.generators[chunk_id] = [WindTurbine(chunk_id, (new_point_x, new_point_y))]
+
+                elif generator_type in ('fossil_generator', 'coal_generator', 'oil_generator', 'gas_generator'):
+                    new_generator = self.place_resource_generator(generator_type, chunk_id, (new_point_x, new_point_y), map_render)
+                    if new_generator == None:
+                        cls()
+                        print("Cannot place generator there! Place it on its corrosponding resource.")
+                        return
+
+                    self.generators[chunk_id] = [new_generator]
+
             else:
+                for generator in self.generators[chunk_id]:
+                    if generator.location == (new_point_x, new_point_x):
+                        cls()
+                        print(f"A generator already exists at this location!")
+                        continue
+
                 if generator_type == 'solar_panel': self.generators[chunk_id].append(SolarPanel(chunk_id, (new_point_x, new_point_y)))
                 elif generator_type == 'wind_turbine': self.generators[chunk_id].append(WindTurbine(chunk_id, (new_point_x, new_point_y)))
+                if generator_type in ('fossil_generator', 'coal_generator', 'oil_generator', 'gas_generator'):
+                    new_generator = self.place_resource_generator(generator_type, chunk_id, (new_point_x, new_point_y), map_render)
+                    if new_generator == None:
+                        cls()
+                        print("Cannot place generator there! Place it on its corrosponding resource.")
+                        return
+
+                    self.generators[chunk_id].append(new_generator)
 
             cls()
             break
+
+    def place_resource_generator(self, generator_type: str, chunk_id: int, location: Tuple, map_render: List):
+        print(map_render)
+        if map_render[location[1]][location[0]] != SYMBOLS[GENERATOR_DEPOSITS[generator_type]]: return
+
+        if generator_type == 'fossil_generator': return FossilGenerator(chunk_id, location)
+        elif generator_type == 'coal_generator': return CoalGenerator(chunk_id, location)
+        elif generator_type == 'oil_generator': return OilGenerator(chunk_id, location)
+        elif generator_type == 'gas_generator': return GasGenerator(chunk_id, location)
+        else: raise Exception(f"Unknown type {generator_type}!")
 
     def connect_wires(self, chunk_id: int):
         if chunk_id not in self.hubs: return

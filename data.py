@@ -2,7 +2,7 @@
 
 CHUNK_SIZE: int = 18
 CHUNK_CENTER: int = int(CHUNK_SIZE/2)
-SEED: int = 314159
+SEED: int = 15
 
 DEPOSIT_TYPES = ['none', 'fossil', 'coal', 'oil', 'gas']
 
@@ -24,7 +24,12 @@ SYMBOLS = {
     'hub': '%',
     'wire': '@',
     'solar_panel': '#',
-    'wind_turbine': '~'
+    'wind_turbine': '~',
+
+    'fossil_generator': 'F',
+    'coal_generator': 'C',
+    'oil_generator': 'O',
+    'gas_generator': 'G'
 }
 
 GENERATOR_DEPOSITS = {

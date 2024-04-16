@@ -17,7 +17,7 @@ class Game:
         self.menu_manager: MenuManager = MenuManager()
         self.construction_manager: ConstructionManager = ConstructionManager()
         self.construction_manager.hubs[self.chunk_manager.chunks[1][1].chunk_id] = Hub(self.chunk_manager.chunks[1][1].chunk_id)
-        self.money = 15000
+        self.money = 60000000
         self.income_rate = 0
         self.xp = 1
 
@@ -41,17 +41,25 @@ class Game:
                 if res == "none": res = "Failed to buy item. Does not exist!\nType 'help' for more info...\n"
                 else:
                     if self.money >= int(res):
+                        money_before = self.money
                         self.money -= int(res)
+
                         res = f"Successfully purchased {item}!\n"
 
                         if SHOP_ITEM_TYPES[item] == 0:
+                            len_generators_before = len(self.construction_manager.generators)
                             self.construction_manager.build(item, self.chunk_manager.chunks[1][1].chunk_id, self.draw_map, cls)
+
+                            if len(self.construction_manager.generators) == len_generators_before:
+                                res = "You have been refunded!\n"
+                                self.money = money_before
+
                             self.construction_manager.connect_wires(self.chunk_manager.chunks[1][1].chunk_id)
 
                     else: print("You do not have enough money to buy this item!\n")
         return res
     
-    def draw_map(self):
+    def draw_map(self) -> list:
         curr_chunk: Chunk = self.chunk_manager.chunks[1][1]
         map_render: list = []
         curr_chunk_list: list = []
@@ -77,11 +85,15 @@ class Game:
                 for x in range(-1, 2):
                     curr_chunk_list[CHUNK_CENTER+y][CHUNK_CENTER+x] = SYMBOLS['hub']
 
+        map_render_list = curr_chunk_list.copy()
+
         for line in curr_chunk_list:
             map_render.append("".join(line))
 
         print(table_from_2d_list(map_render))
         print()
+
+        return map_render_list
 
     def main(self):
         cls()
