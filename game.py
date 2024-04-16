@@ -88,21 +88,20 @@ class Game:
         print(parse_input([""]))
         cmds: List = []
         res: str = ""
-        last_money_update = time()
+        last_time = time()
         while 1:
             cls()
 
-            if time() - last_money_update > 1:
-                if self.chunk_manager.chunks[1][1].chunk_id in self.construction_manager.generators:
-                    for generator in self.construction_manager.generators[self.chunk_manager.chunks[1][1].chunk_id]:
-                        if not generator.connected: continue
-                        self.money += POWER_OUTPUTS[generator.GENERATOR_TYPE]
+            if self.chunk_manager.chunks[1][1].chunk_id in self.construction_manager.generators:
+                for generator in self.construction_manager.generators[self.chunk_manager.chunks[1][1].chunk_id]:
+                    if not generator.connected: continue
+                    self.money += POWER_OUTPUTS[generator.GENERATOR_TYPE]*(time()-last_time)/100
 
-                last_money_update = time()
+            last_time = time()
 
             res = self.handle_ui_messages(cmds)
 
-            print(display_hud(self.money, self.income_rate, self.xp, self.chunk_manager.position))
+            print(display_hud(int(round(self.money, 0)), self.income_rate, self.xp, self.chunk_manager.position))
 
             self.draw_map()
 

@@ -184,6 +184,8 @@ class ConstructionManager:
         
         self.hubs[chunk_id].reset_nodes()
 
+        if chunk_id not in self.generators: return
+
         for generator in self.generators[chunk_id]:
             generator.connected = False
             if chunk_id not in self.wires: return
