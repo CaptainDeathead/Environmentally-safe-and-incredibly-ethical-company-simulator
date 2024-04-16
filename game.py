@@ -17,7 +17,7 @@ class Game:
         self.menu_manager: MenuManager = MenuManager()
         self.construction_manager: ConstructionManager = ConstructionManager()
         self.construction_manager.hubs[self.chunk_manager.chunks[1][1].chunk_id] = Hub(self.chunk_manager.chunks[1][1].chunk_id)
-        self.money = 60000000
+        self.money = 10_000
         self.income_rate = 0
         self.xp = 1
 
@@ -48,10 +48,13 @@ class Game:
 
                         # construction
                         if SHOP_ITEM_TYPES[item] == 0:
-                            len_generators_before = len(self.construction_manager.generators)
+                            if self.chunk_manager.chunks[1][1].chunk_id not in self.construction_manager.generators: 
+                                len_generators_before = 0
+                                self.construction_manager.generators[self.chunk_manager.chunks[1][1].chunk_id] = []
+                            else: len_generators_before = len(self.construction_manager.generators[self.chunk_manager.chunks[1][1].chunk_id])
                             self.construction_manager.build(item, self.chunk_manager.chunks[1][1].chunk_id, self.draw_map, cls)
 
-                            if len(self.construction_manager.generators) == len_generators_before:
+                            if len(self.construction_manager.generators[self.chunk_manager.chunks[1][1].chunk_id]) == len_generators_before:
                                 res = "You have been refunded!\n"
                                 self.money = money_before
 
@@ -117,7 +120,7 @@ class Game:
             if self.chunk_manager.chunks[1][1].chunk_id in self.construction_manager.generators:
                 for generator in self.construction_manager.generators[self.chunk_manager.chunks[1][1].chunk_id]:
                     if not generator.connected: continue
-                    self.money += POWER_OUTPUTS[generator.GENERATOR_TYPE]*(time()-last_time)/100
+                    self.money += POWER_OUTPUTS[generator.GENERATOR_TYPE]*(time()-last_time)/10
 
             last_time = time()
 
