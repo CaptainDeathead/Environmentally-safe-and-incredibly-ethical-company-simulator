@@ -23,19 +23,22 @@ SYMBOLS = {
 
     'hub': '%',
     'wire': '@',
-    'solar_panel': '#'
+    'solar_panel': '#',
+    'wind_turbine': '~'
 }
 
-SHOP_ITEMS = ['wire', 'solar_panel']
+SHOP_ITEMS = ['wire', 'solar_panel', 'wind_turbine']
 
 SHOP_ITEM_PRICES = {
     'wire': 0,
-    'solar_panel': 5000
+    'solar_panel': 5000,
+    'wind_turbine': 15000
 }
 
 SHOP_ITEM_TYPES = {
     'wire': 0,
-    'solar_panel': 0
+    'solar_panel': 0,
+    'wind_turbine': 0
 }
 
 SHOP_ITEM_TYPES_TO_STR = {
@@ -43,5 +46,6 @@ SHOP_ITEM_TYPES_TO_STR = {
 }
 
 POWER_OUTPUTS = {
-    'solar_panel': 250
+    'solar_panel': 250,
+    'wind_turbine': 900
 }

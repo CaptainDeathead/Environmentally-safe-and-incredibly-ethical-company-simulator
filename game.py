@@ -17,7 +17,7 @@ class Game:
         self.menu_manager: MenuManager = MenuManager()
         self.construction_manager: ConstructionManager = ConstructionManager()
         self.construction_manager.hubs[self.chunk_manager.chunks[1][1].chunk_id] = Hub(self.chunk_manager.chunks[1][1].chunk_id)
-        self.money = 10000
+        self.money = 15000
         self.income_rate = 0
         self.xp = 1
 
@@ -96,7 +96,7 @@ class Game:
                 if self.chunk_manager.chunks[1][1].chunk_id in self.construction_manager.generators:
                     for generator in self.construction_manager.generators[self.chunk_manager.chunks[1][1].chunk_id]:
                         if not generator.connected: continue
-                        self.money += SHOP_ITEM_PRICES[generator.GENERATOR_TYPE]
+                        self.money += POWER_OUTPUTS[generator.GENERATOR_TYPE]
 
                 last_money_update = time()
 

@@ -1,6 +1,6 @@
 from typing import Dict, List, Tuple
 from Construction.wire import Wire
-from Construction.generators import SolarPanel
+from Construction.generators import SolarPanel, WindTurbine
 from data import CHUNK_SIZE, CHUNK_CENTER
 
 class ConstructionManager:
@@ -29,7 +29,7 @@ class ConstructionManager:
 
     def build(self, item, chunk_id: int = None, draw_map_func = None, cls = None):
         if item == 'wire': self.place_wire(chunk_id, draw_map_func, cls)
-        elif item == "solar_panel": self.place_generator(chunk_id, item, draw_map_func, cls)
+        elif item in ("solar_panel", "wind_turbine"): self.place_generator(chunk_id, item, draw_map_func, cls)
 
     def place_wire(self, chunk_id: int, draw_map_func, cls):
         points: List = []
@@ -170,9 +170,11 @@ class ConstructionManager:
                 continue
 
             if chunk_id not in self.generators:
-                self.generators[chunk_id] = [SolarPanel(chunk_id, (new_point_x, new_point_y))]
+                if generator_type == 'solar_panel': self.generators[chunk_id] = [SolarPanel(chunk_id, (new_point_x, new_point_y))]
+                elif generator_type == 'wind_turbine': self.generators[chunk_id] = [WindTurbine(chunk_id, (new_point_x, new_point_y))]
             else:
-                self.generators[chunk_id].append(SolarPanel(chunk_id, (new_point_x, new_point_y)))
+                if generator_type == 'solar_panel': self.generators[chunk_id].append(SolarPanel(chunk_id, (new_point_x, new_point_y)))
+                elif generator_type == 'wind_turbine': self.generators[chunk_id].append(WindTurbine(chunk_id, (new_point_x, new_point_y)))
 
             cls()
             break
