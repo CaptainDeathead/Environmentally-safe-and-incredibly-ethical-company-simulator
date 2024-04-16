@@ -12,10 +12,21 @@ Movement:
     elif help_type == "map":
         return """
 Map:
+    - @: wire
+    - %: hub
+
     - f: fossil
     - c: coal
     - o: oil
     - g: gas
+
+    - F: fossil generator
+    - C: coal generator
+    - O: oil generator
+    - G: gas generator
+
+    - #: solar panel
+    - ~: wind turbine
 """
     else: return """
 Commands:
@@ -26,7 +37,17 @@ Commands:
     - 'buy <item>': Buy an item from the shop
     - 'exit': Quit the game!
 
-    - More to come...
+About:
+    To the play the game you must build resource generators and wire them up to the hub to earn money.
+
+    Some generators need to be on their corrosponding resource deposits. (Type 'help map' for more info).
+    They also need to be connected to a hub.
+
+    You can have 1 hub in each chunk.
+    Hubs can only have 1 wire on each square / of them (9x9).
+    You can buy more chunks in the shop.
+
+    Wires must begin on the same coordinates as the generator and end on the same coordinates of the part of the hub you want to attach it to.
 """
 
 def left() -> str:
