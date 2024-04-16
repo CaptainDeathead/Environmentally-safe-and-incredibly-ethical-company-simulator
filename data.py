@@ -27,7 +27,7 @@ SYMBOLS = {
     'wind_turbine': '~'
 }
 
-SHOP_ITEMS = ['wire', 'solar_panel', 'wind_turbine']
+SHOP_ITEMS = ['wire', 'solar_panel', 'wind_turbine', 'fossil_generator', 'coal_generator', 'oil_generator', 'gas_generator']
 
 SHOP_ITEM_PRICES = {
     'wire': 0,
